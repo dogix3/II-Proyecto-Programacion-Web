@@ -1,6 +1,0 @@
-http://programacion-php.readthedocs.io/es/latest/Tutorial7_XML-JSON.md.html
-
-
-https://gist.github.com/nathanhornby/4727009
-
-
