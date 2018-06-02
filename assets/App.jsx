@@ -12,22 +12,28 @@ var DropdownItem = Reactstrap.DropdownItem;
 var Container = Reactstrap.Container;
 var Row = Reactstrap.Row;
 var Col = Reactstrap.Col;
+var Modal = Reactstrap.Modal;
+var ModalHeader = Reactstrap.ModalHeader;
+var ModalBody = Reactstrap.ModalBody;
+var ModalFooter = Reactstrap.ModalFooter;
 
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { programs: [], program: [], revisiones: []}
+        this.state = { countries: [], country: [], options: [], modal: false, nuevo:false }
         this.handleReload = this.handleReload.bind(this);
+        this.handleEditData = this.handleEditData.bind(this);
         this.handleChangeData = this.handleChangeData.bind(this);
-        this.handleChangeProgram = this.handleChangeProgram.bind(this);
+        this.handleChangeCountry = this.handleChangeCountry.bind(this);
+        this.handleAddData = this.handleAddData.bind(this);
     }
     handleReload() {
-        fetch('./server/index.php/programa')
+        fetch('./server/index.php/country')
         .then((response) => {
             return response.json()
         })
         .then((data) => {
-            this.setState({ programs: data });
+            this.setState({ countries: data });
             this.forceUpdate();
         })
     }
@@ -37,64 +43,46 @@ class App extends React.Component {
     handleChangeData() {
         this.handleReload();
     }
-    handleChangeProgram(data) {
-        this.setState({program: data})
+    handleChangeCountry(data) {
+        this.setState({country: data})
+    }
+    handleEditData(bool) {
+    	if (bool) {
+    		this.setState({
+     		 nuevo: true
+    		});
+    	}else{
+    		this.setState({
+     		 nuevo: false
+    		});
+    	}
+        this.setState({
+      modal: !this.state.modal
+    });
+    }
+    handleAddData() {
+        this.setState({
+      nuevo: true
+    });
     }
     render() {
         return (<div><Navbar color="light" light expand="md">
           <NavbarBrand href="/">Datos de Países</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="http://programacion-con-reactjs.readthedocs.io">Tutorial</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar><Container>
-        <Row>
-            <Col xs="4">
-                <ProgramList programs={this.state.programs} handleChangeProgram={this.handleChangeProgram}/>
-            </Col>
-            <Col xs="8">
-                <Row>
-                    <Col xs="12">
-                        <ProgramForm program={this.state.program} handleChangeData={this.handleChangeData}/>
-                    </Col>
-                </Row>
-            </Col>
+        </Navbar><p></p><Container><Row>
+        <Col xs="8"><CountryList countries={this.state.countries}
+        	handleEditData={this.handleEditData}
+        	handleAddData={this.handleAddData}
+            handleChangeCountry={this.handleChangeCountry}/></Col>
+        <Col xs="4"><CountryDisplay country={this.state.country}
+            handleEditData={this.handleEditData}/></Col>
         </Row>
-        <hr/>
-        <Row>
-            <Col xs="4">
-                <HistorialList revisiones={this.state.revisiones} handleChangeProgram={this.handleChangeProgram}/>
-            </Col>
-            <Col xs="8">
-                <Row>
-                    <Col xs="12">
-                        <ProgramForm program={this.state.program} handleChangeData={this.handleChangeData}/>
-                    </Col>
-                </Row>
-            </Col>
-        </Row>
-        </Container></div>)
+        </Container>
+        <CountryForm country={this.state.country} modal={this.state.modal}
+            handleEditData={this.handleEditData}
+            nuevo={this.state.nuevo}
+            handleChangeData={this.handleChangeData}/>
+        </div>)
     }
 }
 ReactDOM.render(<App/>, document.getElementById('root'));
