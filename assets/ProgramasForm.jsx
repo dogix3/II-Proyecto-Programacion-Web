@@ -11,7 +11,7 @@ var FormText = Reactstrap.FormText;
 
        super(props)
 
-    this.state = {id:"",cliente:"",fecha:"",impuestos:13.0,montoTotal:0.0}
+    this.state = {id:"",nombre_compuesto:"",num_version:"",fecha_publicacion:"",lenguaje:"", descripcion:"", id_usuario:""}
 
     this.handleInsert = this.handleInsert.bind(this);
 
@@ -27,15 +27,17 @@ var FormText = Reactstrap.FormText;
 
        this.setState({id:nextProps.factura.id});
 
-       this.setState({cliente:nextProps.factura.cliente});
+       this.setState({nombre_compuesto:nextProps.factura.nombre_compuesto});
 
-       this.setState({name:nextProps.factura.name});
+       this.setState({num_version:nextProps.factura.num_version});
 
-       this.setState({fecha:nextProps.factura.fecha});
+       this.setState({fecha_publicacion:nextProps.factura.fecha_publicacion});
 
-       this.setState({impuestos:nextProps.factura.impuestos});
+       this.setState({lenguaje:nextProps.factura.lenguaje});
 
-       this.setState({montoTotal:nextProps.factura.montoTotal});
+       this.setState({descripcion:nextProps.factura.descripcion});
+
+       this.setState({id_usuario:nextProps.factura.id_usuario});
 
     }
 
@@ -53,13 +55,17 @@ var FormText = Reactstrap.FormText;
 
                 method: 'put',
 
-                cliente: this.state.cliente,
+                nombre_compuesto: this.state.nombre_compuesto,
 
-                fecha: this.state.fecha,
+                num_version: this.state.num_version,
 
-                impuestos: this.state.impuestos,
+                fecha_publicacion: this.state.fecha_publicacion,
 
-                montoTotal: this.state.montoTotal
+                lenguaje: this.state.lenguaje,
+
+                descripcion: this.state.descripcion,
+
+                id_usuario: this.state.id_usuario
 
                        })
 
@@ -83,13 +89,17 @@ var FormText = Reactstrap.FormText;
 
             body: JSON.stringify({
 
-                      cliente: this.state.cliente,
+                nombre_compuesto: this.state.nombre_compuesto,
 
-                fecha: this.state.fecha,
+                num_version: this.state.num_version,
 
-                impuestos: this.state.impuestos,
+                fecha_publicacion: this.state.fecha_publicacion,
 
-                montoTotal: this.state.montoTotal
+                lenguaje: this.state.lenguaje,
+
+                descripcion: this.state.descripcion,
+
+                id_usuario: this.state.id_usuario
 
                        })
 
@@ -157,39 +167,39 @@ var FormText = Reactstrap.FormText;
 
            <tr><td width="30%"><Label>Nombre:</Label></td>
 
-               <td width="20%"><Input type="text" name="cliente"
+               <td width="20%"><Input type="text" name="nombre"
 
-                   value={this.state.cliente} onChange={this.handleFields}/></td></tr>
+                   value={this.state.nombre} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Numero de versión:</Label></td>
 
-               <td><Input type="text" name="fecha"
+               <td><Input type="text" name="num_version"
 
-                   value={this.state.fecha} onChange={this.handleFields}/></td></tr>
+                   value={this.state.num_version} onChange={this.handleFields}/></td></tr>
 
             <tr><td><Label>Fecha publicación:</Label></td>
 
-                <td><Input type="text" name="fecha"
+                <td><Input type="date" name="fecha_publicacion"
 
-                    value={this.state.fecha} onChange={this.handleFields}/></td></tr>
+                    value={this.state.fecha_publicacion} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Lenguajes:</Label></td>
 
-               <td><Input type="text" name="impuestos"
+               <td><Input type="text" name="lenguaje"
 
-                   value={this.state.impuestos} onChange={this.handleFields}/></td></tr>
+                   value={this.state.lenguaje} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Descripción:</Label></td>
 
-               <td><Input type="text" name="montoTotal"
+               <td><Input type="text" name="descripcion"
 
-                   value={this.state.montoTotal} onChange={this.handleFields}/></td></tr>
+                   value={this.state.descripcion} onChange={this.handleFields}/></td></tr>
 
             <tr><td><Label>Programador:</Label></td>
 
                 <td><Input type="text" name="montoTotal"
 
-                    value={this.state.montoTotal} onChange={this.handleFields}/></td></tr>
+                    value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
            </tbody></Table><Input type="hidden" name="id" value={this.state.id}/>
 
