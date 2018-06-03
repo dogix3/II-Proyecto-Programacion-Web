@@ -49,7 +49,7 @@ var FormText = Reactstrap.FormText;
 
             headers: {'Content-Type': 'application/json',
 
-                               'Content-Length': 20},
+                               'Content-Length': 200},
 
             body: JSON.stringify({
 
