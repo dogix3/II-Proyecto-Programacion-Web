@@ -322,7 +322,7 @@
 				else if ($_POST['method']=='delete')
 					return $this->delete($id);
 				else if ($_POST['method']=='confirmUser')
-					return $this->confirmPassword($id);
+					return $this->confirmUser($id);
 				$usuario = $_POST['usuario'];
 				$password = $_POST['password'];
 				$nombre = $_POST['nombre'];
