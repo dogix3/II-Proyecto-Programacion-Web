@@ -62,6 +62,10 @@ class App extends React.Component {
 
   }
   componentWillMount() {
+    if (document.cookie.includes("true")) {
+      console.log("Ya el usuario se encuentra logueado segun el cookie");
+      this.setState({is_login: true});
+    }
     this.handleReload();
   }
   handleChangeData() {
@@ -104,11 +108,13 @@ class App extends React.Component {
 
       if (this.state.usuario.usuario == usuario_2 && this.state.usuario.password == password_2) {
         this.setState({is_login: true});
+        document.cookie = "islogin=true";
       }
     })
     
   }
   cerrarSession(){
+    document.cookie = "islogin=false";
     this.setState({is_login: false});
   }
   render() {
