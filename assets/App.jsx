@@ -161,7 +161,8 @@ class App extends React.Component {
         <Col xs="8"><ProgramasList programas={this.state.programas}
           handleChangePrograma={this.handleChangePrograma} /></Col>
         <Col xs="4"><ProgramasForm programa={this.state.programa}
-          handleChangeData={this.handleChangeData} /></Col>
+          handleChangeData={this.handleChangeData}
+          usuario={this.state.usuario} /></Col>
       </Row>
           <Row>
             <Col xs="8"><RevisionesList revisiones={this.state.revisiones}
@@ -169,7 +170,8 @@ class App extends React.Component {
               handleChangeRevision={this.handleChangeRevision} /></Col>
             <Col xs="4"><RevisionesForm revision={this.state.revision}
               programa={this.state.programa}
-              handleChangeData={this.handleChangeData} /></Col>
+              handleChangeData={this.handleChangeData}
+              usuario={this.state.usuario} /></Col>
           </Row></Container></div>)
     } else {
       return (<div>

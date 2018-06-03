@@ -145,7 +145,7 @@ class RevisionesForm extends React.Component {
     }
   }
     render() {
-
+      if (this.props.usuario.tipo_usuario=='Programador') {
         return(<Form><table><tbody>
 
            <tr><td width="30%"><Label>Id revision:</Label></td>
@@ -188,7 +188,9 @@ class RevisionesForm extends React.Component {
                <td><Button onClick={this.handleDelete}>Eliminar</Button></td>
 
            </tr></tbody></Table></Form>)
-
+        }else{
+          return ''
+        }
     }
 
 }

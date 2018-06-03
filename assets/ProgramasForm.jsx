@@ -162,7 +162,7 @@ var FormText = Reactstrap.FormText;
   }
 
     render() {
-
+      if (this.props.usuario.tipo_usuario=='Programador') {
         return(<Form><table><tbody>
 
            <tr><td width="30%"><Label>Nombre:</Label></td>
@@ -212,7 +212,9 @@ var FormText = Reactstrap.FormText;
                <td><Button onClick={this.handleDelete}>Eliminar</Button></td>
 
            </tr></tbody></Table></Form>)
-
+        }else{
+          return ''
+        }
     }
 
 }
