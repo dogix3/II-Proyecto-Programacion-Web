@@ -43,7 +43,7 @@ var FormText = Reactstrap.FormText;
 
     handleInsert() {
 
-        fetch("./server/index.php/factura/"+this.state.id,{
+        fetch("./server/index.php/programa/"+this.state.id,{
 
             method: "post",
 
@@ -81,7 +81,7 @@ var FormText = Reactstrap.FormText;
 
     handleUpdate() {
 
-        fetch("./server/index.php/factura/"+this.state.id,{
+        fetch("./server/index.php/programa/"+this.state.id,{
 
             method: "post",
 
@@ -115,7 +115,7 @@ var FormText = Reactstrap.FormText;
 
     handleDelete() {
 
-      fetch("./server/index.php/producto/"+this.state.id,{
+      fetch("./server/index.php/revision/"+this.state.id,{
 
             method: "post",
 
@@ -131,7 +131,7 @@ var FormText = Reactstrap.FormText;
 
       );
 
-        fetch("./server/index.php/factura/"+this.state.id,{
+        fetch("./server/index.php/programa/"+this.state.id,{
 
             method: "post",
 

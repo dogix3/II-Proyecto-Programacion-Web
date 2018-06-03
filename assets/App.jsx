@@ -24,7 +24,7 @@ class App extends React.Component {
     }
     handleReload() {
 
-         fetch('./server/index.php/factura')
+         fetch('./server/index.php/programa')
 
            .then((response) => {
 
@@ -42,7 +42,7 @@ class App extends React.Component {
 
 
 
-           fetch('./server/index.php/producto')
+           fetch('./server/index.php/revision')
 
            .then((response) => {
 

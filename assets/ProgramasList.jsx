@@ -21,25 +21,25 @@ class ProgramasList extends React.Component {
 
       if (this.props.facturas.length > 0) {
 
-        const rows = this.props.facturas.map((factura,index) =>
+        const rows = this.props.facturas.map((programa,index) =>
 
                     <tr key={index} data-item={index}
 
                         onClick={this.handleDetails}>
 
-                    <td>{factura.id}</td>
+                    <td>{programa.id}</td>
 
-                    <td>{factura.cliente}</td>
+                    <td>{programa.nombre_compuesto}</td>
 
-                    <td>{factura.fecha}</td>
+                    <td>{programa.num_version}</td>
 
-                    <td>{factura.impuestos}</td>
+                    <td>{programa.fecha_publicacion}</td>
 
-                    <td>{factura.montoTotal}</td>
+                    <td>{programa.lenguaje}</td>
                     
-                    <td></td>
+                    <td>{programa.descripcion}</td>
                     
-                    <td></td></tr>);
+                    <td>{programa.id_usuario}</td></tr>);
 
         return (
 

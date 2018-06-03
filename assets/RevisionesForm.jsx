@@ -42,7 +42,7 @@ class RevisionesForm extends React.Component {
 
     handleInsert() {
 
-        fetch("./server/index.php/producto/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id_producto,{
 
             method: "post",
 
@@ -74,7 +74,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/factura/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_factura,{
 
             method: "post",
 
@@ -94,7 +94,7 @@ class RevisionesForm extends React.Component {
 
     handleUpdate() {
 
-        fetch("./server/index.php/producto/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id_producto,{
 
             method: "post",
 
@@ -122,7 +122,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/factura/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_factura,{
 
             method: "post",
 
@@ -142,7 +142,7 @@ class RevisionesForm extends React.Component {
 
     handleDelete() {
 
-        fetch("./server/index.php/producto/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id_producto,{
 
             method: "post",
 
@@ -158,7 +158,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/factura/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_factura,{
 
             method: "post",
 
