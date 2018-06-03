@@ -30,7 +30,7 @@ class RevisionesForm extends React.Component {
 
        this.setState({id_revision:nextProps.revision.id});
 
-       this.setState({id_programa:nextProps.revision.id_programa});
+       this.setState({id_programa:nextProps.programa.id});
 
        this.setState({fecha:nextProps.revision.fecha});
 
@@ -139,7 +139,8 @@ class RevisionesForm extends React.Component {
     if (this.props.programa.id==='undefined') {      
       return ''
     }else{
-      //this.setState({id_factura: this.props.factura.id});
+      //this.setState({id_programa: this.props.programa.id_programa});
+      //this.state.id_programa = this.props.programa.id_programa;
       return this.props.programa.id
     }
   }
@@ -157,7 +158,7 @@ class RevisionesForm extends React.Component {
 
                <td><Input type="text" name="id_programa"
 
-                   value={this.checkIdFactura()} onChange={this.handleFields}/></td></tr>
+                   value={this.state.id_programa} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Descripción:</Label></td>
 
