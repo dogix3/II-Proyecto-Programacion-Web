@@ -100,13 +100,13 @@ class App extends React.Component {
             </Nav>
           </Collapse>
         </Navbar><Container><Row>
-        <Col xs="8"><FacturasList facturas={this.state.facturas} 
+        <Col xs="8"><ProgramasList facturas={this.state.facturas} 
                  handleChangeFactura={this.handleChangeFactura}/></Col>
         <Col xs="4"><FacturaForm factura={this.state.factura}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row>
         <Row>
-        <Col xs="8"><ProductosList productos={this.state.productos} 
+        <Col xs="8"><RevisionesList productos={this.state.productos} 
                 factura={this.state.factura}
                  handleChangeProducto={this.handleChangeProducto}/></Col>
         <Col xs="4"><ProductoForm producto={this.state.producto}

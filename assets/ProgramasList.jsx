@@ -1,5 +1,5 @@
 var Table = Reactstrap.Table;
-class FacturasList extends React.Component {
+class ProgramasList extends React.Component {
 
     constructor(props) {
 
@@ -35,15 +35,20 @@ class FacturasList extends React.Component {
 
                     <td>{factura.impuestos}</td>
 
-                    <td>{factura.montoTotal}</td></tr>);
+                    <td>{factura.montoTotal}</td>
+                    
+                    <td></td>
+                    
+                    <td></td></tr>);
 
         return (
 
             <Table width="100%" border="1">
 
-              <thead><tr><th>Id</th><th>Cliente</th><th>Fecha</th>
+              <thead><tr><th>Id</th><th>Version</th><th>Nombre</th>
 
-                    <th>Imp.</th><th>Total</th></tr></thead>
+                    <th>Fecha Publicación</th><th>Lenguaje</th>
+                    <th>Descripción</th><th>Programador</th></tr></thead>
 
               <tbody>
 
