@@ -73,7 +73,7 @@ class App extends React.Component {
     this.setState({ revision: data })
   }
   checkLogin(usuario_2, password_2) {
-    fetch("./server/index.php/programa/" + this.state.id, {
+    fetch("./server/index.php/usuario/"+usuario_2, {
 
       method: "post",
 
