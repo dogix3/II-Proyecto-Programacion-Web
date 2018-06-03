@@ -41,9 +41,10 @@ class LoginForm extends React.Component {
 
         return (<Form>
             <Container>
-                <Row>
+                <Row className="mt-5">
                     <div className="text-center divLoginContent">
-                        <Col xs="4" className="frmLoginContent">
+                        <h3>Administración del software y revisiones 1.0</h3>
+                        <Col xs="4" className="frmLoginContent mt-5">
                             <Row>
                                 <Col xs="12">
                                     <Label>Usuario</Label>

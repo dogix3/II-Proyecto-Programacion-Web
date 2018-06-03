@@ -131,24 +131,21 @@ class App extends React.Component {
   render() {
     if (this.state.is_login) {
       return (<div><Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Datos de Facturas</NavbarBrand>
+        <NavbarBrand href="/">Administración del software y revisiones 1.0</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="http://programacion-con-reactjs.readthedocs.io">Tutorial</NavLink>
+              <NavLink disabled>Estadisticas</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Options
                 </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                  </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                  </DropdownItem>
+                <DropdownItem disabled>
+                  Mi Perfil
+                </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={this.cerrarSession}>
                   Cerrar Sesión
