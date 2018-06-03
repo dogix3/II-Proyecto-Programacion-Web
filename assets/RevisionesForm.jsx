@@ -12,7 +12,7 @@ class RevisionesForm extends React.Component {
 
        super(props)
 
-    this.state = {id_producto:"",id_factura:0,cantidad:0,descripcion:"",valUnit:0.0,subTotal:0.0}
+    this.state = {id:"",id_programa:0, fecha:"",descripcion:"",id_usuario:0}
 
     this.handleInsert = this.handleInsert.bind(this);
 
@@ -26,17 +26,15 @@ class RevisionesForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-       this.setState({id_producto:nextProps.producto.id});
+       this.setState({id:nextProps.producto.id});
 
-       this.setState({id_factura:nextProps.producto.id_factura});
+       this.setState({id_programa:nextProps.producto.id_programa});
 
-       this.setState({cantidad:nextProps.producto.cantidad});
+       this.setState({fecha:nextProps.producto.fecha});
 
        this.setState({descripcion:nextProps.producto.descripcion});
 
-       this.setState({valUnit:nextProps.producto.valUnit});
-
-       this.setState({subTotal:nextProps.producto.subTotal});
+       this.setState({id_usuario:nextProps.producto.id_usuario});
 
     }
 
@@ -54,13 +52,13 @@ class RevisionesForm extends React.Component {
 
                 method: 'put',
 
-                id_factura: this.state.id_factura,
+                id: this.state.id,
 
-                cantidad: this.state.cantidad,
+                fecha: this.state.fecha,
 
                 descripcion: this.state.descripcion,
 
-                valUnit: this.state.valUnit,
+                id_usuario: this.state.id_usuario,
 
                 subTotal: this.state.subTotal
 
@@ -74,7 +72,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/programa/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_programa,{
 
             method: "post",
 
@@ -94,7 +92,7 @@ class RevisionesForm extends React.Component {
 
     handleUpdate() {
 
-        fetch("./server/index.php/revision/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id,{
 
             method: "post",
 
@@ -102,13 +100,13 @@ class RevisionesForm extends React.Component {
 
             body: JSON.stringify({
 
-                id_factura: this.state.id_factura,
+                id: this.state.id,
 
-                cantidad: this.state.cantidad,
+                fecha: this.state.fecha,
 
                 descripcion: this.state.descripcion,
 
-                valUnit: this.state.valUnit,
+                id_usuario: this.state.id_usuario,
 
                 subTotal: this.state.subTotal
 
@@ -122,7 +120,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/programa/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_programa,{
 
             method: "post",
 
@@ -142,7 +140,7 @@ class RevisionesForm extends React.Component {
 
     handleDelete() {
 
-        fetch("./server/index.php/revision/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id,{
 
             method: "post",
 
@@ -158,7 +156,7 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/programa/"+this.state.id_factura,{
+        fetch("./server/index.php/programa/"+this.state.id_programa,{
 
             method: "post",
 
@@ -185,7 +183,7 @@ class RevisionesForm extends React.Component {
      const name = target.name;
      (target.type==='number') ? 
       (
-        (name==='cantidad') ? this.state.subTotal=value*this.state.valUnit : this.state.subTotal=value*this.state.cantidad
+        (name==='fecha') ? this.state.subTotal=value*this.state.id_usuario : this.state.subTotal=value*this.state.fecha
       )
      : '';
     
@@ -199,33 +197,33 @@ class RevisionesForm extends React.Component {
 
            <tr><td width="30%"><Label>Id revision:</Label></td>
 
-               <td width="20%"><Input disabled="true" type="text" name="id_producto"
+               <td width="20%"><Input disabled="true" type="text" name="id"
 
-                   value={this.state.id_producto} onChange={this.handleFields}/></td></tr>
+                   value={this.state.id} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Id programa:</Label></td>
 
-               <td><Input type="text" name="id_factura"
+               <td><Input type="text" name="id_programa"
 
-                   value={this.state.id_factura} onChange={this.handleFields}/></td></tr>
+                   value={this.state.id_programa} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Descripción:</Label></td>
-
-               <td><Input type="number" name="cantidad"
-
-                   value={this.state.cantidad} onChange={this.handleFields}/></td></tr>
-
-           <tr><td><Label>Fecha:</Label></td>
 
                <td><Input type="text" name="descripcion"
 
                    value={this.state.descripcion} onChange={this.handleFields}/></td></tr>
 
+           <tr><td><Label>Fecha:</Label></td>
+
+               <td><Input type="date" name="fecha"
+
+                   value={this.state.fecha} onChange={this.handleFields}/></td></tr>
+
            <tr><td><Label>Id usuario:</Label></td>
 
-               <td><Input type="number" name="valUnit"
+               <td><Input type="number" name="id_usuario"
 
-                   value={this.state.valUnit} onChange={this.handleFields}/></td></tr>
+                   value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
            </tbody></table><Input type="hidden" name="id_producto" value={this.state.id_producto}/>
 

@@ -12,18 +12,19 @@ class RevisionesList extends React.Component {
       if (this.props.productos.length > 0) {
           const rows = this.props.productos.map((revision,index) => 
 
-                      (revision.id_factura == this.props.factura.id) ?
+                      (revision.id_programa == this.props.factura.id) ?
                       <tr key={index} data-item={index}
                           onClick={this.handleDetails}>
                       <td>{revision.id}</td>
-                      <td>{revision.id_factura}</td>
-                      <td>{revision.cantidad}</td>
-                      <td>{revision.descripcion}</td></tr> 
+                      <td>{revision.id_programa}</td>
+                      <td>{revision.descripcion}</td>
+                      <td>{revision.fecha}</td>
+                      <td>{revision.id_usuario}</td></tr> 
                       : ''
                       );
           return (
               <table width="100%" border="1">
-                <thead><tr><th>Id</th><th>Descipción</th><th>Fecha</th>
+                <thead><tr><th>Id</th><th>Id programa</th><th>Descipción</th><th>Fecha</th>
                   <th>Programador</th></tr></thead>
                 <tbody>
                   {rows}

@@ -16,7 +16,7 @@ var Col = Reactstrap.Col;
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { facturas: [], factura: [], productos: [], producto: []  }
+        this.state = { programas: [], factura: [], productos: [], producto: []  }
         this.handleReload = this.handleReload.bind(this);
         this.handleChangeData = this.handleChangeData.bind(this);
         this.handleChangeFactura = this.handleChangeFactura.bind(this);
@@ -34,7 +34,7 @@ class App extends React.Component {
 
            .then((data) => {
 
-               this.setState({ facturas: data });
+               this.setState({ programas: data });
 
                this.forceUpdate();
 
@@ -100,7 +100,7 @@ class App extends React.Component {
             </Nav>
           </Collapse>
         </Navbar><Container><Row>
-        <Col xs="8"><ProgramasList facturas={this.state.facturas} 
+        <Col xs="8"><ProgramasList programas={this.state.programas} 
                  handleChangeFactura={this.handleChangeFactura}/></Col>
         <Col xs="4"><ProgramasForm factura={this.state.factura}
                  handleChangeData={this.handleChangeData}/></Col>

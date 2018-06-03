@@ -13,15 +13,15 @@ class ProgramasList extends React.Component {
 
         const index = e.currentTarget.getAttribute('data-item');
 
-        this.props.handleChangeFactura(this.props.facturas[index]);
+        this.props.handleChangeFactura(this.props.programas[index]);
 
     }
 
     render() {
 
-      if (this.props.facturas.length > 0) {
+      if (this.props.programas.length > 0) {
 
-        const rows = this.props.facturas.map((programa,index) =>
+        const rows = this.props.programas.map((programa,index) =>
 
                     <tr key={index} data-item={index}
 
