@@ -137,16 +137,14 @@
 			$dbh = $this->init();
 			try {
 				$_PUT=json_decode(file_get_contents('php://input'), True);
-				$id = $_PUT['id_revision'];
+				$id = $_PUT['id_programa'];
 				$descripcion = $_PUT['descripcion'];
 				$fecha = $_PUT['fecha'];
 				$id_usuario = $_PUT['id_usuario'];
-				$id_programa = $_PUT['id_programa'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO revisiones (id_revision,id_programa,descripcion,fecha,id_usuario) 
-												VALUES (:id_revision,:id_programa,:descripcion,:fecha,:id_usuario)");
-				$stmt->bindParam(':id_revision', $id);
-				$stmt->bindParam(':id_programa', $id_programa);
+				$stmt = $dbh->prepare("INSERT INTO revisiones (id_programa,descripcion,fecha,id_usuario) 
+												VALUES (:id_programa,:descripcion,:fecha,:id_usuario)");
+				$stmt->bindParam(':id_programa', $id);
 				$stmt->bindParam(':descripcion', $descripcion);
 				$stmt->bindParam(':fecha', $fecha);
 				$stmt->bindParam(':id_usuario', $id_usuario);
