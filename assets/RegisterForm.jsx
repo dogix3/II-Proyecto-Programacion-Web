@@ -10,6 +10,9 @@ var Modal = Reactstrap.Modal;
 var ModalHeader = Reactstrap.ModalHeader;
 var ModalBody = Reactstrap.ModalBody;
 var ModalFooter = Reactstrap.ModalFooter;
+var DropdownMenu = Reactstrap.DropdownMenu;
+var DropdownItem = Reactstrap.DropdownItem;
+var Dropdown = Reactstrap.Dropdown;
 
 class RegisterForm extends React.Component {
 
@@ -17,7 +20,7 @@ class RegisterForm extends React.Component {
 
         super(props)
 
-        this.state = { id: "", is_login: "", usuario: "", password: "", nombre: "", tipo_usuario: "" }
+        this.state = { id: "", is_login: "", usuario: "", password: "", nombre: "", tipo_usuario: "Usuario", dropdownOpen: false}
 
         this.handleInsert = this.handleInsert.bind(this);
 
@@ -25,6 +28,7 @@ class RegisterForm extends React.Component {
 
         this.handleRegister = this.handleRegister.bind(this);
 
+        this.toggle = this.toggle.bind(this);
     }
     handleInsert() {
         fetch("./server/index.php/usuario/"+this.state.id,{
@@ -57,6 +61,11 @@ class RegisterForm extends React.Component {
     handleRegister() {
         this.props.handleEditData();
     }
+    toggle() {
+        this.setState(prevState => ({
+          dropdownOpen: !prevState.dropdownOpen
+        }));
+      }
     render() {
 
         return (<Modal isOpen={this.props.modal} toggle={this.props.handleEditData} className={this.props.className}>
@@ -72,9 +81,13 @@ class RegisterForm extends React.Component {
                  <FormGroup><Label>Nombre:</Label>
                     <Input type="text" name="nombre"
                         value={this.state.nombre} onChange={this.handleFields}/></FormGroup>
-                <FormGroup><Label>Tipo_usuario:</Label>
-                    <Input type="text" name="tipo_usuario"
-                        value={this.state.tipo_usuario} onChange={this.handleFields}/></FormGroup>
+                <FormGroup>
+                    <Label>Tipo usuario:</Label>
+                    <select className="form-control" onChange={this.handleFields}>
+                        <option selected value="Usuario">Usuario</option>
+                        <option value="Programador">Programador</option>
+                    </select>
+                </FormGroup>
                 <Input type="hidden" name="id" value={this.state.id}/>
             </Form>
           </ModalBody>
