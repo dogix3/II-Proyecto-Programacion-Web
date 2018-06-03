@@ -221,10 +221,133 @@
 			}
 		}
 	}
+		class DBHandler3 {
+		function init() {
+			try {
+				$dbh = new PDO('sqlite:test.db');
+				return $dbh;
+			} catch (Exception $e) {
+				die("Unable to connect: " . $e->getMessage());
+			}            
+		}
+		function get($id=null) {
+			$dbh = $this->init();
+			try {
+				if ($id!=null) {
+					$stmt = $dbh->prepare("SELECT * FROM usuarios WHERE id = :id");
+					$stmt->bindParam(':id', $id);
+				} else {
+					$stmt = $dbh->prepare("SELECT * FROM usuarios");
+				}
+				$stmt->execute();
+				$data = Array();
+				while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+					$data[] = $result;
+				}
+				echo json_encode($data);
+			} catch (Exception $e) {
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function confirmUser($id=null) {
+			$dbh = $this->init();
+			try {
+				$_PUT=json_decode(file_get_contents('php://input'), True);
+				$usuario = $_PUT['usuario'];
+				$password = $_PUT['password'];
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("SELECT * FROM usuarios WHERE id = :usuario OR usuario = :usuario 
+											AND password = :password");
+				$stmt->bindParam(':usuario', $usuario);
+				$stmt->bindParam(':password', $password);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function put($id=null) {
+			$dbh = $this->init();
+			try {
+				$_PUT=json_decode(file_get_contents('php://input'), True);
+				$usuario = $_PUT['usuario'];
+				$password = $_PUT['password'];
+				$nombre = $_PUT['nombre'];
+				$tipo_usuario = $_PUT['tipo_usuario'];
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("INSERT INTO usuarios (usuario,password,nombre,tipo_usuario) 
+												VALUES (:usuario,:password,:nombre,:tipo_usuario)");
+				$stmt->bindParam(':usuario', $usuario);
+				$stmt->bindParam(':password', $password);
+				$stmt->bindParam(':nombre', $nombre);
+				$stmt->bindParam(':tipo_usuario', $tipo_usuario);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function delete($id=null) {
+			$dbh = $this->init();
+			try {
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("DELETE FROM usuarios WHERE id = :id");
+				$stmt->bindParam(':id', $id);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function post($id=null) {
+			$dbh = $this->init();
+			try {
+				$_POST=json_decode(file_get_contents('php://input'), True);
+				if ($_POST['method']=='put')
+					return $this->put($id);
+				else if ($_POST['method']=='delete')
+					return $this->delete($id);
+				else if ($_POST['method']=='confirmUser')
+					return $this->confirmPassword($id);
+				$usuario = $_POST['usuario'];
+				$password = $_POST['password'];
+				$nombre = $_POST['nombre'];
+				$tipo_usuario = $_POST['tipo_usuario'];
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("UPDATE usuarios SET usuario=:usuario,
+										password=:password, nombre=:nombre,
+										tipo_usuario=:tipo_usuario WHERE id = :id");
+				$stmt->bindParam(':id', $id);
+				$stmt->bindParam(':usuario', $usuario);
+				$stmt->bindParam(':password', $password);
+				$stmt->bindParam(':nombre', $nombre);
+				$stmt->bindParam(':tipo_usuario', $tipo_usuario);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+	}
+	
 	Toro::serve(array(
 		"/programa" => "DBHandler",
 		"/programa/:alpha" => "DBHandler",
 		"/revision" => "DBHandler2",
 		"/revision/:alpha" => "DBHandler2",
+		"/usuario" => "DBHandler3",
+		"/usuario/:alpha" => "DBHandler3",
 	));
 ?>
