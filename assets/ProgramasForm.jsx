@@ -155,29 +155,41 @@ var FormText = Reactstrap.FormText;
 
         return(<Form><Table><tbody>
 
-           <tr><td width="30%"><Label>Cliente:</Label></td>
+           <tr><td width="30%"><Label>Nombre:</Label></td>
 
                <td width="20%"><Input type="text" name="cliente"
 
                    value={this.state.cliente} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Fecha:</Label></td>
+           <tr><td><Label>Numero de versión:</Label></td>
 
                <td><Input type="text" name="fecha"
 
                    value={this.state.fecha} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Impuestos:</Label></td>
+            <tr><td><Label>Fecha publicación:</Label></td>
+
+                <td><Input type="text" name="fecha"
+
+                    value={this.state.fecha} onChange={this.handleFields}/></td></tr>
+
+           <tr><td><Label>Lenguajes:</Label></td>
 
                <td><Input type="text" name="impuestos"
 
                    value={this.state.impuestos} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Total:</Label></td>
+           <tr><td><Label>Descripción:</Label></td>
 
                <td><Input type="text" name="montoTotal"
 
                    value={this.state.montoTotal} onChange={this.handleFields}/></td></tr>
+
+            <tr><td><Label>Programador:</Label></td>
+
+                <td><Input type="text" name="montoTotal"
+
+                    value={this.state.montoTotal} onChange={this.handleFields}/></td></tr>
 
            </tbody></Table><Input type="hidden" name="id" value={this.state.id}/>
 
