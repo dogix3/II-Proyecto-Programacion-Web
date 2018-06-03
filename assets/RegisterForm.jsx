@@ -76,7 +76,7 @@ class RegisterForm extends React.Component {
                     <Input type="text" name="usuario"
                         value={this.state.usuario} onChange={this.handleFields}/></FormGroup>
                 <FormGroup><Label>Password:</Label>
-                    <Input type="text" name="password"
+                    <Input type="password" name="password"
                         value={this.state.password} onChange={this.handleFields}/></FormGroup>
                  <FormGroup><Label>Nombre:</Label>
                     <Input type="text" name="nombre"
