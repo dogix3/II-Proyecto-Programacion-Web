@@ -4,7 +4,7 @@ var FormGroup = Reactstrap.FormGroup;
 var Label = Reactstrap.Label;
 var Input = Reactstrap.Input;
 var FormText = Reactstrap.FormText;
-
+var Table = Reactstrap.Table;
 
 class RevisionesForm extends React.Component {
 

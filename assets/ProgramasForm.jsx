@@ -163,7 +163,7 @@ var FormText = Reactstrap.FormText;
 
     render() {
 
-        return(<Form><Table><tbody>
+        return(<Form><table><tbody>
 
            <tr><td width="30%"><Label>Nombre:</Label></td>
 
@@ -201,9 +201,9 @@ var FormText = Reactstrap.FormText;
 
                     value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
-           </tbody></Table><Input type="hidden" name="id" value={this.state.id}/>
+           </tbody></table><Input type="hidden" name="id" value={this.state.id}/>
 
-           <Table><tbody><tr>
+           <table><tbody><tr>
 
                <td><Button onClick={this.handleInsert}>Agregar</Button></td>
 
@@ -211,7 +211,7 @@ var FormText = Reactstrap.FormText;
 
                <td><Button onClick={this.handleDelete}>Eliminar</Button></td>
 
-           </tr></tbody></Table></Form>)
+           </tr></tbody></table></Form>)
 
     }
 
