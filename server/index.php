@@ -13,10 +13,10 @@
 			$dbh = $this->init();
 			try {
 				if ($id!=null) {
-					$stmt = $dbh->prepare("SELECT * FROM facturas WHERE id = :id");
+					$stmt = $dbh->prepare("SELECT * FROM programas WHERE id = :id");
 					$stmt->bindParam(':id', $id);
 				} else {
-					$stmt = $dbh->prepare("SELECT * FROM facturas");
+					$stmt = $dbh->prepare("SELECT * FROM programas");
 				}
 				$stmt->execute();
 				$data = Array();
@@ -32,17 +32,21 @@
 			$dbh = $this->init();
 			try {
 				$_PUT=json_decode(file_get_contents('php://input'), True);
-				$cliente = $_PUT['cliente'];
-				$fecha = $_PUT['fecha'];
-				$impuestos = $_PUT['impuestos'];
-				$montoTotal = $_PUT['montoTotal'];
+				$nombre_compuesto = $_PUT['nombre_compuesto'];
+				$num_version = $_PUT['num_version'];
+				$fecha_publicacion = $_PUT['fecha_publicacion'];
+				$lenguaje = $_PUT['lenguaje'];
+				$descripcion = $_PUT['descripcion'];
+				$id_usuario = $_PUT['id_usuario'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO facturas (cliente,fecha,impuestos,montoTotal) 
-												VALUES (:cliente,:fecha,:impuestos,:montoTotal)");
-				$stmt->bindParam(':cliente', $cliente);
-				$stmt->bindParam(':fecha', $fecha);
-				$stmt->bindParam(':impuestos', $impuestos);
-				$stmt->bindParam(':montoTotal', $montoTotal);
+				$stmt = $dbh->prepare("INSERT INTO programas (nombre_compuesto,num_version,fecha_publicacion,lenguaje,descripcion,id_usuario) 
+												VALUES (nombre_compuesto,num_version,fecha_publicacion,lenguaje,descripcion,id_usuario)");
+				$stmt->bindParam(':nombre_compuesto', $nombre_compuesto);
+				$stmt->bindParam(':num_version', $num_version);
+				$stmt->bindParam(':fecha_publicacion', $fecha_publicacion);
+				$stmt->bindParam(':lenguaje', $lenguaje);
+				$stmt->bindParam(':descripcion', $descripcion);
+				$stmt->bindParam(':id_usuario', $id_usuario);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -56,24 +60,7 @@
 			$dbh = $this->init();
 			try {
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("DELETE FROM facturas WHERE id = :id");
-				$stmt->bindParam(':id', $id);
-				$dbh->beginTransaction();
-				$stmt->execute();
-				$dbh->commit();
-				echo 'Successfull';
-			} catch (Exception $e) {
-				$dbh->rollBack();
-				echo "Failed: " . $e->getMessage();
-			}
-		}
-		function updateTotal($id=null) {
-			$dbh = $this->init();
-			try {
-				$_POST=json_decode(file_get_contents('php://input'), True);
-				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE facturas SET montoTotal=(select (impuestos *(select total(subTotal) from productos where id_factura=1)/100)+(select total(subTotal) from productos where id_factura=1)
-from facturas where id=:id) WHERE id = :id");
+				$stmt = $dbh->prepare("DELETE FROM programas WHERE id = :id");
 				$stmt->bindParam(':id', $id);
 				$dbh->beginTransaction();
 				$stmt->execute();
@@ -92,21 +79,22 @@ from facturas where id=:id) WHERE id = :id");
 					return $this->put($id);
 				else if ($_POST['method']=='delete')
 					return $this->delete($id);
-				else if ($_POST['method']=='updateTotal')
-					return $this->updateTotal($id);
-				$cliente = $_POST['cliente'];
-				$fecha = $_POST['fecha'];
-				$impuestos = $_POST['impuestos'];
-				$montoTotal = $_POST['montoTotal'];
+				$nombre_compuesto = $_POST['nombre_compuesto'];
+				$num_version = $_POST['num_version'];
+				$fecha_publicacion = $_POST['fecha_publicacion'];
+				$lenguaje = $_POST['lenguaje'];
+				$descripcion = $_POST['descripcion'];
+				$id_usuario = $_POST['id_usuario'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE facturas SET cliente=:cliente,
-										fecha=:fecha, impuestos=:impuestos,
-										montoTotal=:montoTotal WHERE id = :id");
+				$stmt = $dbh->prepare("UPDATE programas SET nombre_compuesto=:nombre_compuesto,
+										num_version=:num_version, fecha_publicacion=:fecha_publicacion,
+										lenguaje=:lenguaje,descripcion=:descripcion WHERE id = :id");
 				$stmt->bindParam(':id', $id);
-				$stmt->bindParam(':cliente', $cliente);
-				$stmt->bindParam(':fecha', $fecha);
-				$stmt->bindParam(':impuestos', $impuestos);
-				$stmt->bindParam(':montoTotal', $montoTotal);
+				$stmt->bindParam(':nombre_compuesto', $nombre_compuesto);
+				$stmt->bindParam(':num_version', $num_version);
+				$stmt->bindParam(':fecha_publicacion', $fecha_publicacion);
+				$stmt->bindParam(':lenguaje', $lenguaje);
+				$stmt->bindParam(':descripcion', $descripcion);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -126,14 +114,14 @@ from facturas where id=:id) WHERE id = :id");
 				die("Unable to connect: " . $e->getMessage());
 			}            
 		}
-		function get($id_factura=null) {
+		function get($id_revision=null) {
 			$dbh = $this->init();
 			try {
-				if ($id_factura!=null) {
-					$stmt = $dbh->prepare("SELECT * FROM productos WHERE id_factura = :id_factura");
-					$stmt->bindParam(':id_factura', $id_factura);
+				if ($id_revision!=null) {
+					$stmt = $dbh->prepare("SELECT * FROM revisiones WHERE id_revision = :id_revision");
+					$stmt->bindParam(':id_revision', $id_revision);
 				} else {
-					$stmt = $dbh->prepare("SELECT * FROM productos");
+					$stmt = $dbh->prepare("SELECT * FROM revisiones");
 				}
 				$stmt->execute();
 				$data = Array();
@@ -149,19 +137,19 @@ from facturas where id=:id) WHERE id = :id");
 			$dbh = $this->init();
 			try {
 				$_PUT=json_decode(file_get_contents('php://input'), True);
-				$id = $_PUT['id_factura'];
-				$cantidad = $_PUT['cantidad'];
+				$id = $_PUT['id_revision'];
 				$descripcion = $_PUT['descripcion'];
-				$valUnit = $_PUT['valUnit'];
-				$subTotal = $_PUT['subTotal'];
+				$fecha = $_PUT['fecha'];
+				$id_usuario = $_PUT['id_usuario'];
+				$id_programa = $_PUT['id_programa'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO productos (id_factura,cantidad,descripcion,valUnit,subTotal) 
-												VALUES (:id_factura,:cantidad,:descripcion,:valUnit,:subTotal)");
-				$stmt->bindParam(':id_factura', $id);
-				$stmt->bindParam(':cantidad', $cantidad);
+				$stmt = $dbh->prepare("INSERT INTO revisiones (id_revision,descripcion,fecha,id_usuario,id_programa) 
+												VALUES (:id_revision,:descripcion,:fecha,:id_usuario,:id_programa)");
+				$stmt->bindParam(':id_revision', $id);
 				$stmt->bindParam(':descripcion', $descripcion);
-				$stmt->bindParam(':valUnit', $valUnit);
-				$stmt->bindParam(':subTotal', $subTotal);
+				$stmt->bindParam(':fecha', $fecha);
+				$stmt->bindParam(':id_usuario', $id_usuario);
+				$stmt->bindParam(':id_programa', $id_programa);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -175,7 +163,7 @@ from facturas where id=:id) WHERE id = :id");
 			$dbh = $this->init();
 			try {
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("DELETE FROM productos WHERE id = :id");
+				$stmt = $dbh->prepare("DELETE FROM revisiones WHERE id = :id");
 				$stmt->bindParam(':id', $id);
 				$dbh->beginTransaction();
 				$stmt->execute();
@@ -190,7 +178,7 @@ from facturas where id=:id) WHERE id = :id");
 			$dbh = $this->init();
 			try {
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("DELETE FROM productos WHERE id_factura = :id");
+				$stmt = $dbh->prepare("DELETE FROM revisiones WHERE id_programa = :id");
 				$stmt->bindParam(':id', $id);
 				$dbh->beginTransaction();
 				$stmt->execute();
@@ -211,20 +199,18 @@ from facturas where id=:id) WHERE id = :id");
 					return $this->delete($id);
 				else if ($_POST['method']=='deleteAll')
 					return $this->deleteAll($id);
-				$id_factura = $_POST['id_factura'];
-				$cantidad = $_POST['cantidad'];
+				$id_programa = $_POST['id_programa'];
 				$descripcion = $_POST['descripcion'];
-				$valUnit = $_POST['valUnit'];
-				$subTotal = $_POST['subTotal'];
+				$fecha = $_POST['fecha'];
+				$id_usuario = $_POST['id_usuario'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE productos SET id_factura=:id_factura,cantidad=:cantidad,
-					descripcion=:descripcion,valUnit=:valUnit,subTotal=:subTotal WHERE id = :id_producto");
-				$stmt->bindParam(':id_producto', $id);
-				$stmt->bindParam(':id_factura', $id_factura);
-				$stmt->bindParam(':cantidad', $cantidad);
+				$stmt = $dbh->prepare("UPDATE productos SET id_programa=:id_programa,descripcion=:descripcion,
+					fecha=:fecha,id_usuario=:id_usuario WHERE id = :id_revision");
+				$stmt->bindParam(':id_revision', $id);
+				$stmt->bindParam(':id_programa', $id_programa);
 				$stmt->bindParam(':descripcion', $descripcion);
-				$stmt->bindParam(':valUnit', $valUnit);
-				$stmt->bindParam(':subTotal', $subTotal);
+				$stmt->bindParam(':fecha', $fecha);
+				$stmt->bindParam(':id_usuario', $id_usuario);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -236,9 +222,9 @@ from facturas where id=:id) WHERE id = :id");
 		}
 	}
 	Toro::serve(array(
-		"/factura" => "DBHandler",
-		"/factura/:alpha" => "DBHandler",
-		"/producto" => "DBHandler2",
-		"/producto/:alpha" => "DBHandler2",
+		"/programa" => "DBHandler",
+		"/programa/:alpha" => "DBHandler",
+		"/revision" => "DBHandler2",
+		"/revision/:alpha" => "DBHandler2",
 	));
 ?>
