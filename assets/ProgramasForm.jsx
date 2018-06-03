@@ -25,19 +25,19 @@ var FormText = Reactstrap.FormText;
 
     componentWillReceiveProps(nextProps) {
 
-       this.setState({id:nextProps.factura.id});
+       this.setState({id:nextProps.programa.id});
 
-       this.setState({nombre_compuesto:nextProps.factura.nombre_compuesto});
+       this.setState({nombre_compuesto:nextProps.programa.nombre_compuesto});
 
-       this.setState({num_version:nextProps.factura.num_version});
+       this.setState({num_version:nextProps.programa.num_version});
 
-       this.setState({fecha_publicacion:nextProps.factura.fecha_publicacion});
+       this.setState({fecha_publicacion:nextProps.programa.fecha_publicacion});
 
-       this.setState({lenguaje:nextProps.factura.lenguaje});
+       this.setState({lenguaje:nextProps.programa.lenguaje});
 
-       this.setState({descripcion:nextProps.factura.descripcion});
+       this.setState({descripcion:nextProps.programa.descripcion});
 
-       this.setState({id_usuario:nextProps.factura.id_usuario});
+       this.setState({id_usuario:nextProps.programa.id_usuario});
 
     }
 

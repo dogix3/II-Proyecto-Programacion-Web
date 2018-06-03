@@ -40,7 +40,7 @@ class RevisionesForm extends React.Component {
 
     handleInsert() {
 
-        fetch("./server/index.php/revision/"+this.state.id_producto,{
+        fetch("./server/index.php/revision/"+this.state.id,{
 
             method: "post",
 
