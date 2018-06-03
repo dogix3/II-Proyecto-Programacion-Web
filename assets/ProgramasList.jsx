@@ -29,9 +29,9 @@ class ProgramasList extends React.Component {
 
                     <td>{programa.id}</td>
 
-                    <td>{programa.nombre_compuesto}</td>
-
                     <td>{programa.num_version}</td>
+
+                    <td>{programa.nombre_compuesto}</td>
 
                     <td>{programa.fecha_publicacion}</td>
 

@@ -169,7 +169,7 @@ var FormText = Reactstrap.FormText;
 
                <td width="20%"><Input type="text" name="nombre"
 
-                   value={this.state.nombre} onChange={this.handleFields}/></td></tr>
+                   value={this.state.nombre_compuesto} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Numero de versión:</Label></td>
 
