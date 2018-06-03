@@ -6,7 +6,7 @@ var Input = Reactstrap.Input;
 var FormText = Reactstrap.FormText;
 
 
-class ProductoForm extends React.Component {
+class RevisionesForm extends React.Component {
 
     constructor(props) {
 

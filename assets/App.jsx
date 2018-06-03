@@ -102,14 +102,14 @@ class App extends React.Component {
         </Navbar><Container><Row>
         <Col xs="8"><ProgramasList facturas={this.state.facturas} 
                  handleChangeFactura={this.handleChangeFactura}/></Col>
-        <Col xs="4"><FacturaForm factura={this.state.factura}
+        <Col xs="4"><ProgramasForm factura={this.state.factura}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row>
         <Row>
         <Col xs="8"><RevisionesList productos={this.state.productos} 
                 factura={this.state.factura}
                  handleChangeProducto={this.handleChangeProducto}/></Col>
-        <Col xs="4"><ProductoForm producto={this.state.producto}
+        <Col xs="4"><RevisionesForm producto={this.state.producto}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row></Container></div>)
     }

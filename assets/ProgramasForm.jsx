@@ -5,7 +5,7 @@ var Label = Reactstrap.Label;
 var Input = Reactstrap.Input;
 var FormText = Reactstrap.FormText;
 
- class FacturaForm extends React.Component {
+ class ProgramasForm extends React.Component {
 
     constructor(props) {
 
