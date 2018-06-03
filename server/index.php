@@ -13,10 +13,10 @@
 			$dbh = $this->init();
 			try {
 				if ($id!=null) {
-					$stmt = $dbh->prepare("SELECT * FROM countries WHERE id = :id");
+					$stmt = $dbh->prepare("SELECT * FROM facturas WHERE id = :id");
 					$stmt->bindParam(':id', $id);
 				} else {
-					$stmt = $dbh->prepare("SELECT * FROM countries");
+					$stmt = $dbh->prepare("SELECT * FROM facturas");
 				}
 				$stmt->execute();
 				$data = Array();
@@ -32,17 +32,17 @@
 			$dbh = $this->init();
 			try {
 				$_PUT=json_decode(file_get_contents('php://input'), True);
-				$name = $_PUT['name'];
-				$area = $_PUT['area'];
-				$population = $_PUT['population'];
-				$density = $_PUT['density'];
+				$cliente = $_PUT['cliente'];
+				$fecha = $_PUT['fecha'];
+				$impuestos = $_PUT['impuestos'];
+				$montoTotal = $_PUT['montoTotal'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO countries (name,area,population,density) 
-												VALUES (:name,:area,:population,:density)");
-				$stmt->bindParam(':name', $name);
-				$stmt->bindParam(':area', $area);
-				$stmt->bindParam(':population', $population);
-				$stmt->bindParam(':density', $density);
+				$stmt = $dbh->prepare("INSERT INTO facturas (cliente,fecha,impuestos,montoTotal) 
+												VALUES (:cliente,:fecha,:impuestos,:montoTotal)");
+				$stmt->bindParam(':cliente', $cliente);
+				$stmt->bindParam(':fecha', $fecha);
+				$stmt->bindParam(':impuestos', $impuestos);
+				$stmt->bindParam(':montoTotal', $montoTotal);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -56,7 +56,24 @@
 			$dbh = $this->init();
 			try {
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("DELETE FROM countries WHERE id = :id");
+				$stmt = $dbh->prepare("DELETE FROM facturas WHERE id = :id");
+				$stmt->bindParam(':id', $id);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function updateTotal($id=null) {
+			$dbh = $this->init();
+			try {
+				$_POST=json_decode(file_get_contents('php://input'), True);
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("UPDATE facturas SET montoTotal=(select (impuestos *(select total(subTotal) from productos where id_factura=1)/100)+(select total(subTotal) from productos where id_factura=1)
+from facturas where id=:id) WHERE id = :id");
 				$stmt->bindParam(':id', $id);
 				$dbh->beginTransaction();
 				$stmt->execute();
@@ -75,19 +92,21 @@
 					return $this->put($id);
 				else if ($_POST['method']=='delete')
 					return $this->delete($id);
-				$name = $_POST['name'];
-				$area = $_POST['area'];
-				$population = $_POST['population'];
-				$density = $_POST['density'];
+				else if ($_POST['method']=='updateTotal')
+					return $this->updateTotal($id);
+				$cliente = $_POST['cliente'];
+				$fecha = $_POST['fecha'];
+				$impuestos = $_POST['impuestos'];
+				$montoTotal = $_POST['montoTotal'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE countries SET area=:area,
-										population=:population, density=:density,
-										name=:name WHERE id = :id");
+				$stmt = $dbh->prepare("UPDATE facturas SET cliente=:cliente,
+										fecha=:fecha, impuestos=:impuestos,
+										montoTotal=:montoTotal WHERE id = :id");
 				$stmt->bindParam(':id', $id);
-				$stmt->bindParam(':area', $area);
-				$stmt->bindParam(':population', $population);
-				$stmt->bindParam(':density', $density);
-				$stmt->bindParam(':name', $name);
+				$stmt->bindParam(':cliente', $cliente);
+				$stmt->bindParam(':fecha', $fecha);
+				$stmt->bindParam(':impuestos', $impuestos);
+				$stmt->bindParam(':montoTotal', $montoTotal);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -107,14 +126,14 @@
 				die("Unable to connect: " . $e->getMessage());
 			}            
 		}
-		function get($id_pais=null) {
+		function get($id_factura=null) {
 			$dbh = $this->init();
 			try {
-				if ($id_pais!=null) {
-					$stmt = $dbh->prepare("SELECT * FROM provinces WHERE id_pais = :id_pais");
-					$stmt->bindParam(':id_pais', $id_pais);
+				if ($id_factura!=null) {
+					$stmt = $dbh->prepare("SELECT * FROM productos WHERE id_factura = :id_factura");
+					$stmt->bindParam(':id_factura', $id_factura);
 				} else {
-					$stmt = $dbh->prepare("SELECT * FROM provinces");
+					$stmt = $dbh->prepare("SELECT * FROM productos");
 				}
 				$stmt->execute();
 				$data = Array();
@@ -130,13 +149,19 @@
 			$dbh = $this->init();
 			try {
 				$_PUT=json_decode(file_get_contents('php://input'), True);
-				$id = $_PUT['id_pais'];
-				$name = $_PUT['name'];
+				$id = $_PUT['id_factura'];
+				$cantidad = $_PUT['cantidad'];
+				$descripcion = $_PUT['descripcion'];
+				$valUnit = $_PUT['valUnit'];
+				$subTotal = $_PUT['subTotal'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO provinces (id_pais,nombre) 
-												VALUES (:id_pais,:nombre)");
-				$stmt->bindParam(':id_pais', $id);
-				$stmt->bindParam(':nombre', $name);
+				$stmt = $dbh->prepare("INSERT INTO productos (id_factura,cantidad,descripcion,valUnit,subTotal) 
+												VALUES (:id_factura,:cantidad,:descripcion,:valUnit,:subTotal)");
+				$stmt->bindParam(':id_factura', $id);
+				$stmt->bindParam(':cantidad', $cantidad);
+				$stmt->bindParam(':descripcion', $descripcion);
+				$stmt->bindParam(':valUnit', $valUnit);
+				$stmt->bindParam(':subTotal', $subTotal);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -150,7 +175,7 @@
 			$dbh = $this->init();
 			try {
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("DELETE FROM provinces WHERE id = :id");
+				$stmt = $dbh->prepare("DELETE FROM productos WHERE id = :id");
 				$stmt->bindParam(':id', $id);
 				$dbh->beginTransaction();
 				$stmt->execute();
@@ -161,22 +186,45 @@
 				echo "Failed: " . $e->getMessage();
 			}
 		}
-		function post($id_province=null) {
+		function deleteAll($id=null) {
+			$dbh = $this->init();
+			try {
+				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $dbh->prepare("DELETE FROM productos WHERE id_factura = :id");
+				$stmt->bindParam(':id', $id);
+				$dbh->beginTransaction();
+				$stmt->execute();
+				$dbh->commit();
+				echo 'Successfull';
+			} catch (Exception $e) {
+				$dbh->rollBack();
+				echo "Failed: " . $e->getMessage();
+			}
+		}
+		function post($id=null) {
 			$dbh = $this->init();
 			try {
 				$_POST=json_decode(file_get_contents('php://input'), True);
 				if ($_POST['method']=='put')
-					return $this->put($id_province);
+					return $this->put($id);
 				else if ($_POST['method']=='delete')
-					return $this->delete($id_province);
-				$id_pais = $_POST['id_pais'];
-				$name = $_POST['name'];
+					return $this->delete($id);
+				else if ($_POST['method']=='deleteAll')
+					return $this->deleteAll($id);
+				$id_factura = $_POST['id_factura'];
+				$cantidad = $_POST['cantidad'];
+				$descripcion = $_POST['descripcion'];
+				$valUnit = $_POST['valUnit'];
+				$subTotal = $_POST['subTotal'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE provinces SET nombre=:name,
-										id_pais=:id_pais WHERE id = :id_province");
-				$stmt->bindParam(':id_province', $id_province);
-				$stmt->bindParam(':id_pais', $id_pais);
-				$stmt->bindParam(':name', $name);
+				$stmt = $dbh->prepare("UPDATE productos SET id_factura=:id_factura,cantidad=:cantidad,
+					descripcion=:descripcion,valUnit=:valUnit,subTotal=:subTotal WHERE id = :id_producto");
+				$stmt->bindParam(':id_producto', $id);
+				$stmt->bindParam(':id_factura', $id_factura);
+				$stmt->bindParam(':cantidad', $cantidad);
+				$stmt->bindParam(':descripcion', $descripcion);
+				$stmt->bindParam(':valUnit', $valUnit);
+				$stmt->bindParam(':subTotal', $subTotal);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -188,9 +236,9 @@
 		}
 	}
 	Toro::serve(array(
-		"/country" => "DBHandler",
-		"/country/:alpha" => "DBHandler",
-		"/province" => "DBHandler2",
-		"/province/:alpha" => "DBHandler2",
+		"/factura" => "DBHandler",
+		"/factura/:alpha" => "DBHandler",
+		"/producto" => "DBHandler2",
+		"/producto/:alpha" => "DBHandler2",
 	));
 ?>

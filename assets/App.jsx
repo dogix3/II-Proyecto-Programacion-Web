@@ -12,77 +12,106 @@ var DropdownItem = Reactstrap.DropdownItem;
 var Container = Reactstrap.Container;
 var Row = Reactstrap.Row;
 var Col = Reactstrap.Col;
-var Modal = Reactstrap.Modal;
-var ModalHeader = Reactstrap.ModalHeader;
-var ModalBody = Reactstrap.ModalBody;
-var ModalFooter = Reactstrap.ModalFooter;
 
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { countries: [], country: [], options: [], modal: false, nuevo:false }
+        this.state = { facturas: [], factura: [], productos: [], producto: []  }
         this.handleReload = this.handleReload.bind(this);
-        this.handleEditData = this.handleEditData.bind(this);
         this.handleChangeData = this.handleChangeData.bind(this);
-        this.handleChangeCountry = this.handleChangeCountry.bind(this);
-        this.handleAddData = this.handleAddData.bind(this);
+        this.handleChangeFactura = this.handleChangeFactura.bind(this);
+        this.handleChangeProducto = this.handleChangeProducto.bind(this);
     }
     handleReload() {
-        fetch('./server/index.php/country')
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            this.setState({ countries: data });
-            this.forceUpdate();
-        })
-    }
+
+         fetch('./server/index.php/factura')
+
+           .then((response) => {
+
+               return response.json()
+
+           })
+
+           .then((data) => {
+
+               this.setState({ facturas: data });
+
+               this.forceUpdate();
+
+           })
+
+
+
+           fetch('./server/index.php/producto')
+
+           .then((response) => {
+
+               return response.json()
+
+           })
+
+           .then((data) => {
+
+               this.setState({ productos: data });
+
+               this.forceUpdate();
+
+           })
+
+       }
     componentWillMount() {
         this.handleReload();
     }
     handleChangeData() {
         this.handleReload();
     }
-    handleChangeCountry(data) {
-        this.setState({country: data})
+    handleChangeFactura(data) {
+      this.setState({factura: data})
     }
-    handleEditData(bool) {
-    	if (bool) {
-    		this.setState({
-     		 nuevo: true
-    		});
-    	}else{
-    		this.setState({
-     		 nuevo: false
-    		});
-    	}
-        this.setState({
-      modal: !this.state.modal
-    });
-    }
-    handleAddData() {
-        this.setState({
-      nuevo: true
-    });
+    handleChangeProducto(data) {
+      this.setState({producto: data})
     }
     render() {
         return (<div><Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Datos de Países</NavbarBrand>
+          <NavbarBrand href="/">Datos de Facturas</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-        </Navbar><p></p><Container><Row>
-        <Col xs="8"><CountryList countries={this.state.countries}
-        	handleEditData={this.handleEditData}
-        	handleAddData={this.handleAddData}
-            handleChangeCountry={this.handleChangeCountry}/></Col>
-        <Col xs="4"><CountryDisplay country={this.state.country}
-            handleEditData={this.handleEditData}/></Col>
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="http://programacion-con-reactjs.readthedocs.io">Tutorial</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    Option 1
+                  </DropdownItem>
+                  <DropdownItem>
+                    Option 2
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Reset
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar><Container><Row>
+        <Col xs="8"><FacturasList facturas={this.state.facturas} 
+                 handleChangeFactura={this.handleChangeFactura}/></Col>
+        <Col xs="4"><FacturaForm factura={this.state.factura}
+                 handleChangeData={this.handleChangeData}/></Col>
         </Row>
-        </Container>
-        <CountryForm country={this.state.country} modal={this.state.modal}
-            handleEditData={this.handleEditData}
-            nuevo={this.state.nuevo}
-            handleChangeData={this.handleChangeData}/>
-        </div>)
+        <Row>
+        <Col xs="8"><ProductosList productos={this.state.productos} 
+                factura={this.state.factura}
+                 handleChangeProducto={this.handleChangeProducto}/></Col>
+        <Col xs="4"><ProductoForm producto={this.state.producto}
+                 handleChangeData={this.handleChangeData}/></Col>
+        </Row></Container></div>)
     }
 }
 ReactDOM.render(<App/>, document.getElementById('root'));
