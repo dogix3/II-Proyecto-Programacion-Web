@@ -143,13 +143,13 @@
 				$id_usuario = $_PUT['id_usuario'];
 				$id_programa = $_PUT['id_programa'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO revisiones (id_revision,descripcion,fecha,id_usuario,id_programa) 
-												VALUES (:id_revision,:descripcion,:fecha,:id_usuario,:id_programa)");
+				$stmt = $dbh->prepare("INSERT INTO revisiones (id_revision,id_programa,descripcion,fecha,id_usuario) 
+												VALUES (:id_revision,:id_programa,:descripcion,:fecha,:id_usuario)");
 				$stmt->bindParam(':id_revision', $id);
+				$stmt->bindParam(':id_programa', $id_programa);
 				$stmt->bindParam(':descripcion', $descripcion);
 				$stmt->bindParam(':fecha', $fecha);
 				$stmt->bindParam(':id_usuario', $id_usuario);
-				$stmt->bindParam(':id_programa', $id_programa);
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
@@ -204,7 +204,7 @@
 				$fecha = $_POST['fecha'];
 				$id_usuario = $_POST['id_usuario'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("UPDATE productos SET id_programa=:id_programa,descripcion=:descripcion,
+				$stmt = $dbh->prepare("UPDATE revisiones SET id_programa=:id_programa,descripcion=:descripcion,
 					fecha=:fecha,id_usuario=:id_usuario WHERE id = :id_revision");
 				$stmt->bindParam(':id_revision', $id);
 				$stmt->bindParam(':id_programa', $id_programa);
