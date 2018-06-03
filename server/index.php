@@ -221,7 +221,7 @@
 			}
 		}
 	}
-		class DBHandler3 {
+	class DBHandler3 {
 		function init() {
 			try {
 				$dbh = new PDO('sqlite:test.db');
@@ -260,10 +260,15 @@
 											AND password = :password");
 				$stmt->bindParam(':usuario', $usuario);
 				$stmt->bindParam(':password', $password);
-				$dbh->beginTransaction();
 				$stmt->execute();
-				$dbh->commit();
-				echo 'Successfull';
+				$data = Array();
+				while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+					$data[] = $result;
+				}
+				echo json_encode($data);
+				//$dbh->beginTransaction();
+				//$dbh->commit();
+				//echo 'Successfull';
 			} catch (Exception $e) {
 				$dbh->rollBack();
 				echo "Failed: " . $e->getMessage();
