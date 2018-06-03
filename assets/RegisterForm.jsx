@@ -83,7 +83,7 @@ class RegisterForm extends React.Component {
                         value={this.state.nombre} onChange={this.handleFields}/></FormGroup>
                 <FormGroup>
                     <Label>Tipo usuario:</Label>
-                    <select className="form-control" onChange={this.handleFields}>
+                    <select name="tipo_usuario" className="form-control" onChange={this.handleFields}>
                         <option selected value="Usuario">Usuario</option>
                         <option value="Programador">Programador</option>
                     </select>
