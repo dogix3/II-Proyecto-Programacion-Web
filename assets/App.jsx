@@ -22,6 +22,7 @@ class App extends React.Component {
     this.handleChangePrograma = this.handleChangePrograma.bind(this);
     this.handleChangeRevision = this.handleChangeRevision.bind(this);
     this.checkLogin = this.checkLogin.bind(this);
+    this.cerrarSession = this.cerrarSession.bind(this);
   }
   handleReload() {
 
@@ -107,6 +108,9 @@ class App extends React.Component {
     })
     
   }
+  cerrarSession(){
+    this.setState({is_login: false});
+  }
   render() {
     if (this.state.is_login) {
       return (<div><Navbar color="light" light expand="md">
@@ -129,8 +133,8 @@ class App extends React.Component {
                   Option 2
                   </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
-                  Reset
+                <DropdownItem onClick={this.cerrarSession}>
+                  Cerrar Sesión
                   </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
