@@ -94,16 +94,16 @@ class App extends React.Component {
       })
 
     }).then((response) => {
-
+      console.log(response);
       return response.json()
 
     }).then((data) => {
-
+      console.log(data);
       this.setState({ usuario: data });
 
     })
 
-    if (usuario.usuario == usuario_2 && usuario.usuario == password_2) {
+    if (this.state.usuario.usuario == usuario_2 && this.state.usuario.password == password_2) {
       this.setState({is_login: true});
     }
   }

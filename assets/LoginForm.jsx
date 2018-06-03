@@ -14,6 +14,8 @@ class LoginForm extends React.Component {
 
         this.state = { id: "", is_login: "", usuario: "", password: "", nombre: "", tipo_usuario: "" }
 
+        this.handleFields = this.handleFields.bind(this);
+
         this.login = this.login.bind(this);
 
     }
