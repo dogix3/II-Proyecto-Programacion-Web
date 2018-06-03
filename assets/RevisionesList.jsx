@@ -23,13 +23,13 @@ class RevisionesList extends React.Component {
                       : ''
                       );
           return (
-              <table width="100%" border="1">
+              <Table width="100%" border="1">
                 <thead><tr><th>Id</th><th>Id programa</th><th>Descipción</th><th>Fecha</th>
                   <th>Programador</th></tr></thead>
                 <tbody>
                   {rows}
                 </tbody>
-              </table>
+              </Table>
           );
         
      }
