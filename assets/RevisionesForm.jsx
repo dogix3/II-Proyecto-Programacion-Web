@@ -197,41 +197,35 @@ class RevisionesForm extends React.Component {
 
         return(<Form><table><tbody>
 
-           <tr><td width="30%"><Label>Id:</Label></td>
+           <tr><td width="30%"><Label>Id revision:</Label></td>
 
                <td width="20%"><Input disabled="true" type="text" name="id_producto"
 
                    value={this.state.id_producto} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Id_factura:</Label></td>
+           <tr><td><Label>Id programa:</Label></td>
 
                <td><Input type="text" name="id_factura"
 
                    value={this.state.id_factura} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Cantidad:</Label></td>
+           <tr><td><Label>Descripción:</Label></td>
 
                <td><Input type="number" name="cantidad"
 
                    value={this.state.cantidad} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>Descripcion:</Label></td>
+           <tr><td><Label>Fecha:</Label></td>
 
                <td><Input type="text" name="descripcion"
 
                    value={this.state.descripcion} onChange={this.handleFields}/></td></tr>
 
-           <tr><td><Label>ValUnit:</Label></td>
+           <tr><td><Label>Id usuario:</Label></td>
 
                <td><Input type="number" name="valUnit"
 
                    value={this.state.valUnit} onChange={this.handleFields}/></td></tr>
-
-           <tr><td><Label>SubTotal:</Label></td>
-
-               <td><Input type="number" name="subTotal"
-
-                   value={this.state.subTotal} onChange={this.handleFields}/></td></tr>
 
            </tbody></table><Input type="hidden" name="id_producto" value={this.state.id_producto}/>
 
