@@ -75,6 +75,8 @@ class App extends React.Component {
   checkLogin(usuario_2, password_2) {
     fetch("./server/index.php/programa/" + this.state.id, {
 
+      method: "post",
+
       headers: {
         'Content-Type': 'application/json',
 
@@ -82,6 +84,8 @@ class App extends React.Component {
       },
 
       body: JSON.stringify({
+
+        method: 'confirmUser',
 
         usuario: usuario_2,
 
@@ -91,7 +95,7 @@ class App extends React.Component {
 
     }).then((response) => {
 
-      //this.props.handleChangeData();
+      return response.json()
 
     }).then((data) => {
 
