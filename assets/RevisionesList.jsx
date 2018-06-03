@@ -6,11 +6,11 @@ class RevisionesList extends React.Component {
     }
     handleDetails(e) {
         const index = e.currentTarget.getAttribute('data-item');
-        this.props.handleChangeProducto(this.props.productos[index]);
+        this.props.handleChangeRevision(this.props.revisiones[index]);
     }
     render() {
-      if (this.props.productos.length > 0) {
-          const rows = this.props.productos.map((revision,index) => 
+      if (this.props.revisiones.length > 0) {
+          const rows = this.props.revisiones.map((revision,index) => 
 
                       (revision.id_programa == this.props.programa.id) ?
                       <tr key={index} data-item={index}

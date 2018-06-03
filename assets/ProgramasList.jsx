@@ -13,7 +13,7 @@ class ProgramasList extends React.Component {
 
         const index = e.currentTarget.getAttribute('data-item');
 
-        this.props.handleChangeFactura(this.props.programas[index]);
+        this.props.handleChangePrograma(this.props.programas[index]);
 
     }
 

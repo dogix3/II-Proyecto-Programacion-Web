@@ -26,15 +26,15 @@ class RevisionesForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-       this.setState({id:nextProps.producto.id});
+       this.setState({id:nextProps.revision.id});
 
-       this.setState({id_programa:nextProps.producto.id_programa});
+       this.setState({id_programa:nextProps.revision.id_programa});
 
-       this.setState({fecha:nextProps.producto.fecha});
+       this.setState({fecha:nextProps.revision.fecha});
 
-       this.setState({descripcion:nextProps.producto.descripcion});
+       this.setState({descripcion:nextProps.revision.descripcion});
 
-       this.setState({id_usuario:nextProps.producto.id_usuario});
+       this.setState({id_usuario:nextProps.revision.id_usuario});
 
     }
 

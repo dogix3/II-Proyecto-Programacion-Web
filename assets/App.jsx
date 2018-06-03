@@ -16,11 +16,11 @@ var Col = Reactstrap.Col;
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { programas: [], programa: [], productos: [], producto: []  }
+        this.state = { programas: [], programa: [], revisiones: [], revision: []  }
         this.handleReload = this.handleReload.bind(this);
         this.handleChangeData = this.handleChangeData.bind(this);
-        this.handleChangeFactura = this.handleChangeFactura.bind(this);
-        this.handleChangeProducto = this.handleChangeProducto.bind(this);
+        this.handleChangePrograma = this.handleChangePrograma.bind(this);
+        this.handleChangeRevision = this.handleChangeRevision.bind(this);
     }
     handleReload() {
 
@@ -52,7 +52,7 @@ class App extends React.Component {
 
            .then((data) => {
 
-               this.setState({ productos: data });
+               this.setState({ revisiones: data });
 
                this.forceUpdate();
 
@@ -65,11 +65,11 @@ class App extends React.Component {
     handleChangeData() {
         this.handleReload();
     }
-    handleChangeFactura(data) {
+    handleChangePrograma(data) {
       this.setState({programa: data})
     }
-    handleChangeProducto(data) {
-      this.setState({producto: data})
+    handleChangeRevision(data) {
+      this.setState({revision: data})
     }
     render() {
         return (<div><Navbar color="light" light expand="md">
@@ -101,15 +101,15 @@ class App extends React.Component {
           </Collapse>
         </Navbar><Container><Row>
         <Col xs="8"><ProgramasList programas={this.state.programas} 
-                 handleChangeFactura={this.handleChangeFactura}/></Col>
+                 handleChangePrograma={this.handleChangePrograma}/></Col>
         <Col xs="4"><ProgramasForm programa={this.state.programa}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row>
         <Row>
-        <Col xs="8"><RevisionesList productos={this.state.productos} 
+        <Col xs="8"><RevisionesList revisiones={this.state.revisiones} 
                 programa={this.state.programa}
-                 handleChangeProducto={this.handleChangeProducto}/></Col>
-        <Col xs="4"><RevisionesForm producto={this.state.producto}
+                 handleChangeRevision={this.handleChangeRevision}/></Col>
+        <Col xs="4"><RevisionesForm revision={this.state.revision}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row></Container></div>)
     }

@@ -167,7 +167,7 @@ var FormText = Reactstrap.FormText;
 
            <tr><td width="30%"><Label>Nombre:</Label></td>
 
-               <td width="20%"><Input type="text" name="nombre"
+               <td width="20%"><Input type="text" name="nombre_compuesto"
 
                    value={this.state.nombre_compuesto} onChange={this.handleFields}/></td></tr>
 
@@ -197,7 +197,7 @@ var FormText = Reactstrap.FormText;
 
             <tr><td><Label>Programador:</Label></td>
 
-                <td><Input type="text" name="montoTotal"
+                <td><Input type="text" name="id_usuario"
 
                     value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
