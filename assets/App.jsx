@@ -99,13 +99,13 @@ class App extends React.Component {
 
     }).then((data) => {
       console.log(data);
-      this.setState({ usuario: data });
+      this.setState({ usuario: data[0] });
 
+      if (this.state.usuario.usuario == usuario_2 && this.state.usuario.password == password_2) {
+        this.setState({is_login: true});
+      }
     })
-
-    if (this.state.usuario.usuario == usuario_2 && this.state.usuario.password == password_2) {
-      this.setState({is_login: true});
-    }
+    
   }
   render() {
     if (this.state.is_login) {
