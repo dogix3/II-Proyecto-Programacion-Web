@@ -203,7 +203,7 @@ var FormText = Reactstrap.FormText;
 
            </tbody></table><Input type="hidden" name="id" value={this.state.id}/>
 
-           <table><tbody><tr>
+           <Table><tbody><tr>
 
                <td><Button onClick={this.handleInsert}>Agregar</Button></td>
 
@@ -211,7 +211,7 @@ var FormText = Reactstrap.FormText;
 
                <td><Button onClick={this.handleDelete}>Eliminar</Button></td>
 
-           </tr></tbody></table></Form>)
+           </tr></tbody></Table></Form>)
 
     }
 

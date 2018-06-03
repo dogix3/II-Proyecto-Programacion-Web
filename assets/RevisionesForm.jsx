@@ -179,8 +179,7 @@ class RevisionesForm extends React.Component {
                    value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
            </tbody></table><Input type="hidden" name="id_revision" value={this.state.id_revision}/>
-
-           <table><tbody><tr>
+           <Table><tbody><tr>
 
                <td><Button onClick={this.handleInsert}>Agregar</Button></td>
 
@@ -188,7 +187,7 @@ class RevisionesForm extends React.Component {
 
                <td><Button onClick={this.handleDelete}>Eliminar</Button></td>
 
-           </tr></tbody></table></Form>)
+           </tr></tbody></Table></Form>)
 
     }
 
