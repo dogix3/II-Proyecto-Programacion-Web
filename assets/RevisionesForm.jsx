@@ -12,7 +12,7 @@ class RevisionesForm extends React.Component {
 
        super(props)
 
-    this.state = {id:"",id_programa:0, fecha:"",descripcion:"",id_usuario:0}
+    this.state = {id_revision:"",id_programa:0, fecha:"",descripcion:"",id_usuario:0}
 
     this.handleInsert = this.handleInsert.bind(this);
 
@@ -22,11 +22,13 @@ class RevisionesForm extends React.Component {
 
     this.handleFields = this.handleFields.bind(this);
 
+    this.checkIdFactura = this.checkIdFactura.bind(this);
+
     }
 
     componentWillReceiveProps(nextProps) {
 
-       this.setState({id:nextProps.revision.id});
+       this.setState({id_revision:nextProps.revision.id});
 
        this.setState({id_programa:nextProps.revision.id_programa});
 
@@ -40,7 +42,7 @@ class RevisionesForm extends React.Component {
 
     handleInsert() {
 
-        fetch("./server/index.php/revision/"+this.state.id,{
+        fetch("./server/index.php/revision/"+this.state.id_revision,{
 
             method: "post",
 
@@ -52,7 +54,7 @@ class RevisionesForm extends React.Component {
 
                 method: 'put',
 
-                id: this.state.id,
+                id_programa: this.state.id_programa,
 
                 fecha: this.state.fecha,
 
@@ -60,27 +62,9 @@ class RevisionesForm extends React.Component {
 
                 id_usuario: this.state.id_usuario,
 
-                subTotal: this.state.subTotal
-
                        })
 
         }).then((response) => {
-
-               this.props.handleChangeData();
-
-             }
-
-        );
-
-        fetch("./server/index.php/programa/"+this.state.id_programa,{
-
-            method: "post",
-
-            headers: {'Content-Type': 'application/json'},
-
-            body: JSON.stringify({ method: 'updateTotal'})
-
-         }).then((response) => {
 
                this.props.handleChangeData();
 
@@ -92,7 +76,7 @@ class RevisionesForm extends React.Component {
 
     handleUpdate() {
 
-        fetch("./server/index.php/revision/"+this.state.id,{
+        fetch("./server/index.php/revision/"+this.state.id_revision,{
 
             method: "post",
 
@@ -100,15 +84,13 @@ class RevisionesForm extends React.Component {
 
             body: JSON.stringify({
 
-                id: this.state.id,
+                id_programa: this.state.id_programa,
 
                 fecha: this.state.fecha,
 
                 descripcion: this.state.descripcion,
 
                 id_usuario: this.state.id_usuario,
-
-                subTotal: this.state.subTotal
 
                        })
 
@@ -120,27 +102,11 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/programa/"+this.state.id_programa,{
-
-            method: "post",
-
-            headers: {'Content-Type': 'application/json'},
-
-            body: JSON.stringify({ method: 'updateTotal'})
-
-         }).then((response) => {
-
-               this.props.handleChangeData();
-
-             }
-
-        );
-
     }
 
     handleDelete() {
 
-        fetch("./server/index.php/revision/"+this.state.id,{
+        fetch("./server/index.php/revision/"+this.state.id_revision,{
 
             method: "post",
 
@@ -156,22 +122,6 @@ class RevisionesForm extends React.Component {
 
         );
 
-        fetch("./server/index.php/programa/"+this.state.id_programa,{
-
-            method: "post",
-
-            headers: {'Content-Type': 'application/json'},
-
-            body: JSON.stringify({ method: 'updateTotal'})
-
-         }).then((response) => {
-
-               this.props.handleChangeData();
-
-             }
-
-        );
-
     }
 
     handleFields(event) {
@@ -181,16 +131,18 @@ class RevisionesForm extends React.Component {
      let value = target.value;
 
      const name = target.name;
-     (target.type==='number') ? 
-      (
-        (name==='fecha') ? this.state.subTotal=value*this.state.id_usuario : this.state.subTotal=value*this.state.fecha
-      )
-     : '';
     
      this.setState({[name]: value});
 
   }
-
+ checkIdFactura(){
+    if (this.props.programa.id==='undefined') {      
+      return ''
+    }else{
+      //this.setState({id_factura: this.props.factura.id});
+      return this.props.programa.id
+    }
+  }
     render() {
 
         return(<Form><table><tbody>
@@ -199,13 +151,13 @@ class RevisionesForm extends React.Component {
 
                <td width="20%"><Input disabled="true" type="text" name="id"
 
-                   value={this.state.id} onChange={this.handleFields}/></td></tr>
+                   value={this.state.id_revision} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Id programa:</Label></td>
 
                <td><Input type="text" name="id_programa"
 
-                   value={this.state.id_programa} onChange={this.handleFields}/></td></tr>
+                   value={this.checkIdFactura()} onChange={this.handleFields}/></td></tr>
 
            <tr><td><Label>Descripción:</Label></td>
 
@@ -225,7 +177,7 @@ class RevisionesForm extends React.Component {
 
                    value={this.state.id_usuario} onChange={this.handleFields}/></td></tr>
 
-           </tbody></table><Input type="hidden" name="id_producto" value={this.state.id_producto}/>
+           </tbody></table><Input type="hidden" name="id_revision" value={this.state.id_revision}/>
 
            <table><tbody><tr>
 

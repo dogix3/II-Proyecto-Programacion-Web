@@ -195,7 +195,7 @@ var FormText = Reactstrap.FormText;
 
                    value={this.state.descripcion} onChange={this.handleFields}/></td></tr>
 
-            <tr><td><Label>Programador:</Label></td>
+            <tr><td><Label>Programadors:</Label></td>
 
                 <td><Input type="text" name="id_usuario"
 

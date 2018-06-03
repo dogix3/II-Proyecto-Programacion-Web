@@ -39,8 +39,10 @@
 				$descripcion = $_PUT['descripcion'];
 				$id_usuario = $_PUT['id_usuario'];
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $dbh->prepare("INSERT INTO programas (nombre_compuesto,num_version,fecha_publicacion,lenguaje,descripcion,id_usuario) 
-												VALUES (nombre_compuesto,num_version,fecha_publicacion,lenguaje,descripcion,id_usuario)");
+				$stmt = $dbh->prepare("INSERT INTO programas (nombre_compuesto,num_version,
+							fecha_publicacion,lenguaje,descripcion,id_usuario) 
+									VALUES (:nombre_compuesto,:num_version,:fecha_publicacion,
+							:lenguaje,:descripcion,:id_usuario)");
 				$stmt->bindParam(':nombre_compuesto', $nombre_compuesto);
 				$stmt->bindParam(':num_version', $num_version);
 				$stmt->bindParam(':fecha_publicacion', $fecha_publicacion);
@@ -50,7 +52,7 @@
 				$dbh->beginTransaction();
 				$stmt->execute();
 				$dbh->commit();
-				echo 'Successfull';
+				echo 'Successfull put';
 			} catch (Exception $e) {
 				$dbh->rollBack();
 				echo "Failed: " . $e->getMessage();

@@ -110,6 +110,7 @@ class App extends React.Component {
                 programa={this.state.programa}
                  handleChangeRevision={this.handleChangeRevision}/></Col>
         <Col xs="4"><RevisionesForm revision={this.state.revision}
+                programa={this.state.programa}
                  handleChangeData={this.handleChangeData}/></Col>
         </Row></Container></div>)
     }
