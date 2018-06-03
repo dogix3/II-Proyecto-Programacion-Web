@@ -17,9 +17,9 @@ class LoginForm extends React.Component {
         this.handleFields = this.handleFields.bind(this);
 
         this.login = this.login.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
 
     }
-
     handleFields(event) {
 
         const target = event.target;
@@ -33,6 +33,9 @@ class LoginForm extends React.Component {
     }
     login() {
         this.props.checkLogin(this.state.usuario, this.state.password);
+    }
+    handleRegister() {
+        this.props.handleEditData();
     }
     render() {
 
@@ -64,7 +67,7 @@ class LoginForm extends React.Component {
                                     <Button className="btn_login" onClick={this.login}>Ingresar</Button>
                                 </Col>
                                 <Col xs="12">
-                                    <Button>Registrarse</Button>
+                                    <Button className="btn_register" onClick={this.handleRegister}>Registrarse</Button>
                                 </Col>
                             </Row>
                         </Col>

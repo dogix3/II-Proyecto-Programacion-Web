@@ -12,12 +12,18 @@ var DropdownItem = Reactstrap.DropdownItem;
 var Container = Reactstrap.Container;
 var Row = Reactstrap.Row;
 var Col = Reactstrap.Col;
+var Modal = Reactstrap.Modal;
+var ModalHeader = Reactstrap.ModalHeader;
+var ModalBody = Reactstrap.ModalBody;
+var ModalFooter = Reactstrap.ModalFooter;
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { programas: [], programa: [], revisiones: [], revision: [], usuario: [], is_login: false }
+    this.state = { programas: [], programa: [], revisiones: [], revision: [], usuario: [], 
+      is_login: false, modal: false }
     this.handleReload = this.handleReload.bind(this);
+    this.handleEditData = this.handleEditData.bind(this);
     this.handleChangeData = this.handleChangeData.bind(this);
     this.handleChangePrograma = this.handleChangePrograma.bind(this);
     this.handleChangeRevision = this.handleChangeRevision.bind(this);
@@ -111,6 +117,11 @@ class App extends React.Component {
   cerrarSession(){
     this.setState({is_login: false});
   }
+  handleEditData() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
   render() {
     if (this.state.is_login) {
       return (<div><Navbar color="light" light expand="md">
@@ -155,8 +166,11 @@ class App extends React.Component {
               handleChangeData={this.handleChangeData} /></Col>
           </Row></Container></div>)
     } else {
-      return (
-        <LoginForm checkLogin={this.checkLogin} />
+      return (<div>
+        <LoginForm checkLogin={this.checkLogin}
+          handleEditData={this.handleEditData} />
+        <RegisterForm modal={this.state.modal}
+          handleEditData={this.handleEditData}/></div>
       )
     }
   }
